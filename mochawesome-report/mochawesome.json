@@ -1,0 +1,127 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 0,
+    "pending": 0,
+    "failures": 2,
+    "start": "2020-04-28T13:51:47.851Z",
+    "end": "2020-04-28T13:51:47.889Z",
+    "duration": 38,
+    "testsRegistered": 2,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "8b074f64-1091-476e-b7ff-e1f8221b90a4",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "8107426d-59d1-413c-bf33-4d8fe76ed2a9",
+          "title": "TESTING RSS Feeds",
+          "fullFile": "E:\\InterviewProjs\\RSSFeedsForIO\\tests\\feeds.test.spec.js",
+          "file": "\\tests\\feeds.test.spec.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Testing /getRssFeeds ",
+              "fullTitle": "TESTING RSS Feeds Testing /getRssFeeds ",
+              "timedOut": false,
+              "duration": 1,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "chai.request(app)\n    .get('/apis/v1/getRssFeeds')\n    .end((err, res) => {\n        res.should.have.status(200);\n        res.body.should.be.a('object');\n        res.body.should.have.property('msg');\n        res.body.msg.should.be.eql('Data retrived successfully.');\n        done();\n    });",
+              "err": {
+                "message": "TypeError: app.address is not a function",
+                "estack": "TypeError: app.address is not a function\n    at serverAddress (node_modules\\chai-http\\lib\\request.js:282:18)\n    at new Test (node_modules\\chai-http\\lib\\request.js:271:53)\n    at Object.obj.(anonymous function) [as get] (node_modules\\chai-http\\lib\\request.js:239:14)\n    at Context.it (tests\\feeds.test.spec.js:12:14)",
+                "diff": null
+              },
+              "uuid": "66abc97a-dfaf-4775-9f4b-8287a78c80c5",
+              "parentUUID": "8107426d-59d1-413c-bf33-4d8fe76ed2a9",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Testing /getRssFeedsAndInsertIntoDB ",
+              "fullTitle": "TESTING RSS Feeds Testing /getRssFeedsAndInsertIntoDB ",
+              "timedOut": false,
+              "duration": 0,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "chai.request(app)\n    .get('/apis/v1/getRssFeedsAndInsertIntoDB')\n    .end((err, res) => {\n        res.should.have.status(200);\n        res.body.should.be.a('object');\n        res.body.should.have.property('msg');\n        res.body.should.have.property('status');\n        res.body.status.should.be.eql(true);\n        done();\n    });",
+              "err": {
+                "message": "TypeError: app.address is not a function",
+                "estack": "TypeError: app.address is not a function\n    at serverAddress (node_modules\\chai-http\\lib\\request.js:282:18)\n    at new Test (node_modules\\chai-http\\lib\\request.js:271:53)\n    at Object.obj.(anonymous function) [as get] (node_modules\\chai-http\\lib\\request.js:239:14)\n    at Context.it (tests\\feeds.test.spec.js:24:14)",
+                "diff": null
+              },
+              "uuid": "ddce47c5-6dd5-42aa-bb40-d526be6f4f9d",
+              "parentUUID": "8107426d-59d1-413c-bf33-4d8fe76ed2a9",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "66abc97a-dfaf-4775-9f4b-8287a78c80c5",
+            "ddce47c5-6dd5-42aa-bb40-d526be6f4f9d"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 1,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 30000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 30000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.1.2"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.1.1"
+    },
+    "marge": {
+      "options": null,
+      "version": "5.1.0"
+    }
+  }
+}

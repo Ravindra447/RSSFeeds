@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Rss Feeds</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="jumbotron text-center">
+        <h1>Get RSS Feeds</h1>
+        <p>Click here to get lastest Feeds</p>
+        <button class="btn btn-outline-primary" onclick="getFeeds()">Click</button>
+    </div>
+    <div class="container">
+        <div id="target">
+        </div>
+    </div>
+
+</body>
+<script>
+    function getFeeds() {
+        console.log("clicked");
+        $.ajax({
+            type: 'GET',
+            url: '/apis/v1/getRssFeeds',
+            success: function(data) {
+                console.log(data.result.source)
+                var html = '';
+                for (var i = 0; i < data.result.source.length; i++) {
+                    html += '<p>' + '<strong>' + data.result.source[i].category + '&nbsp;:&nbsp;' + '</strong>' + ' ' + data.result.source[i].description + '</p>';
+                }
+                $('#target').html(html);
+            }
+        });
+    }
+</script>
+
+</html>
