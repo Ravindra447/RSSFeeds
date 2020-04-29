@@ -19,6 +19,8 @@ mongoose.connect(db.dbUrl, { useNewUrlParser: true, useUnifiedTopology: true, us
         console.log("Database Created");
     }
 });
+
+app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use('/apis/v1', feedRoutes, schedularRoutes);
 app.get('/', function(req, res) {

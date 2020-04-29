@@ -11,11 +11,39 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 
-<body>
+<body onload="showFeedData()">
     <div class="jumbotron text-center">
         <h1>Get RSS Feeds</h1>
         <p>Click here to get lastest Feeds</p>
         <button class="btn btn-outline-primary" onclick="getFeeds()">Click</button>
+
+        <div class="container">
+            <div align="start" style="margin-bottom: 20px;">
+                <h3>ADD RSS Feeds&nbsp;:</h3>
+            </div>
+            <div class="card" style="height: 100px;">
+                <div class="row" style="padding-top: 30px;">
+
+                    <div class="col-2">
+                        Feed Type
+                    </div>
+                    <div class="col-3">
+                        <select name="feedType" style="width: 200px; height: 37px; padding: 5px;" id="feedType">
+                                <% var options = ["general","business","technology","sports","entertainment"]; %>
+                                <% for(var i = 0; i <= options.length; i++) { %>
+                                  <option value='<%= options[i] %>'><%= options[i] %></option>
+                                <% } %>
+                            </select>
+                    </div>
+                    <div class="col-5">
+                        <input type="text" class="form-control" placeholder="Enter Feed" id="feed" required>
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-primary" onclick="saveFeed()">Save Feed</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="container">
         <div id="target">
@@ -24,8 +52,25 @@
 
 </body>
 <script>
+    var AllFeed = [];
+
+    function showFeedData() {
+        $.ajax({
+            type: 'GET',
+            url: '/apis/v1/getFeeds',
+            success: function(data) {
+                console.log(data);
+                AllFeed = data.result;
+                var html = '';
+                for (var i = 0; i < AllFeed.length; i++) {
+                    html += '<p>' + '<strong>' + AllFeed[i].feedType + '&nbsp;:&nbsp;' + '</strong>' + ' ' + AllFeed[i].Feed + '</p>';
+                }
+                document.getElementById('target').innerHTML = html;
+            }
+        });
+    }
+
     function getFeeds() {
-        console.log("clicked");
         $.ajax({
             type: 'GET',
             url: '/apis/v1/getRssFeeds',
@@ -35,9 +80,40 @@
                 for (var i = 0; i < data.result.source.length; i++) {
                     html += '<p>' + '<strong>' + data.result.source[i].category + '&nbsp;:&nbsp;' + '</strong>' + ' ' + data.result.source[i].description + '</p>';
                 }
-                $('#target').html(html);
+                document.getElementById('target').innerHTML = html;
+                // $('#target').html(html);
             }
         });
+    }
+
+    function saveFeed() {
+        if (document.getElementById('feed').value != undefined && document.getElementById('feed').value.trim() != "") {
+            var obj = {
+                "feedType": document.getElementById('feedType').value,
+                "Feed": document.getElementById('feed').value
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/apis/v1/addFeeds',
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(obj),
+                success: function(resultData) {
+                    if (resultData.status) {
+                        var html = '';
+                        AllFeed.push(obj);
+
+                        for (var i = 0; i < AllFeed.length; i++) {
+                            html += '<p>' + '<strong>' + AllFeed[i].feedType + '&nbsp;:&nbsp;' + '</strong>' + ' ' + AllFeed[i].Feed + '</p>';
+                        }
+                        document.getElementById('target').innerHTML = html;
+                        document.getElementById('feed').value = "";
+                    } else {
+                        document.getElementById('feed').value = "";
+                    }
+                }
+            });
+        }
     }
 </script>
 
