@@ -12,6 +12,9 @@ routes.post('/addFeeds', feedController.PostFeeds);
 
 routes.get('/getFeeds', feedController.GetFeeds);
 
+routes.post('/addFeedsDataFromLink', feedController.PostFeedsFromLink);
+
+
 
 
 module.exports = routes;

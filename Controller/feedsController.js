@@ -61,10 +61,24 @@ const GetFeeds = async(req, res) => {
         }
     })
 }
+
+const PostFeedsFromLink = async(req, res) => {
+    // console.log(1111, req.body);
+    await dataService.PostFeedsFromLink(req.body, (err, result) => {
+        if (err) console.log(err);
+        if (result.success) {
+            res.status(200);
+            res.json({ status: true, msg: result.msg, result: result.data })
+        } else {
+            res.json({ status: false, msg: "Data Inserted failed." })
+        }
+    })
+}
 module.exports = {
     getFeedFromRSS: getFeedFromRSS,
     InsertFeedsIntoDB: InsertFeedsIntoDB,
     InsertFeedsIntoDBWithSchedular: InsertFeedsIntoDBWithSchedular,
     PostFeeds: PostFeeds,
-    GetFeeds: GetFeeds
+    GetFeeds: GetFeeds,
+    PostFeedsFromLink: PostFeedsFromLink
 }

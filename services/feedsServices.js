@@ -2,6 +2,8 @@ const rssModel = require('../models/rssFeedsModel');
 
 const FeedModel = require('../models/feedModel');
 
+const FeedLinkModel = require('../models/feedFromLinkModel');
+
 
 const feedsUtils = require('../Utils/feedsProvider');
 
@@ -74,10 +76,40 @@ const GetFeeds = async(cb) => {
     })
 
 }
+const PostFeedsFromLink = async(data, cb) => {
+    // console.log(data);
+    feedsUtils.getRSSFeedsUsingLink(data, (err, feedsData) => {
+
+        FeedLinkModel.findOne({ feedsLink: feedsData.feedsLink }, (err, resultData) => {
+            if (err) console.log(err);
+            else {
+                if (!resultData) {
+                    FeedLinkModel.create(feedsData, (err, result) => {
+                        if (err) cb(false, { msg: err });
+                        cb(null, { success: true, data: result, msg: "Data Inserted successfully." })
+                    })
+                } else {
+                    var updateFields = {
+                        feedsType: feedsData.feedsType,
+                        lastBuildDate: feedsData.lastBuildDate,
+                        description: feedsData.description,
+                        feeds: feedsData.feeds
+                    }
+                    FeedLinkModel.updateOne({ feedsLink: feedsData.feedsLink }, updateFields, (err, result) => {
+                        if (err) cb(false, { msg: err });
+                        cb(true, { success: true, data: feedsData, msg: "Data Updated successfully" })
+                    })
+                }
+            }
+        })
+    })
+
+}
 
 module.exports = {
     InsertFeeds: InsertFeeds,
     getDataFromDB: getDataFromDB,
     PostFeeds: PostFeeds,
-    GetFeeds: GetFeeds
+    GetFeeds: GetFeeds,
+    PostFeedsFromLink: PostFeedsFromLink
 }
