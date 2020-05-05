@@ -71,21 +71,21 @@
 <script>
     var AllFeed = [];
 
-    // function showFeedData() {
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: '/apis/v1/getFeeds',
-    //         success: function(data) {
-    //             console.log(data);
-    //             AllFeed = data.result;
-    //             var html = '';
-    //             for (var i = 0; i < AllFeed.length; i++) {
-    //                 html += '<p>' + '<strong>' + AllFeed[i].feedType + '&nbsp;:&nbsp;' + '</strong>' + ' ' + AllFeed[i].Feed + '</p>';
-    //             }
-    //             document.getElementById('target').innerHTML = html;
-    //         }
-    //     });
-    // }
+    function showFeedData() {
+        $.ajax({
+            type: 'GET',
+            url: '/apis/v1/getFeeds',
+            success: function(data) {
+                console.log(data);
+                AllFeed = data.result;
+                var html = '';
+                for (var i = 0; i < AllFeed.length; i++) {
+                    html += '<p>' + '<strong>' + AllFeed[i].feedType + '&nbsp;:&nbsp;' + '</strong>' + ' ' + AllFeed[i].Feed + '</p>';
+                }
+                document.getElementById('target').innerHTML = html;
+            }
+        });
+    }
 
     // function getFeeds() {
     //     $.ajax({
